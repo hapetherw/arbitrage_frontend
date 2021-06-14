@@ -1,0 +1,30 @@
+.mytable-head {
+  th {
+    color: var(--info);
+    background-color: var(--dark) !important;
+    //border-color: var(--light);
+    border: none;
+    border-bottom: 0 !important;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    white-space: nowrap !important;
+    div {
+      font-weight: $font-weight-normal;
+    }
+  }
+}
+.mytable-body {
+  background-color: #404040;
+  td {
+    color: #bfbfbf;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-color: #333435;
+    font-size: 15px;
+    white-space: nowrap !important;
+  }
+}
+
+.mytable-pagination {
+
+}

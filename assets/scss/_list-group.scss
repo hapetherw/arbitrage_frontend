@@ -1,0 +1,29 @@
+.list-group {
+  .list-group-item {
+    border-radius: unset;
+  }
+  .language-item.list-group-item {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: #3b3a3a;
+    &.active {
+      border-left: 0;
+      border-right: 0;
+      border-top: 0;
+      background-color: #242424;
+      h4 {
+        color: #fbb033 !important;
+      }
+    }
+  }
+}
+
+.faq-container {
+  .b-sidebar {
+    .list-group-item.active {
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-left: 3px solid var(--secondary);
+
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.form-control {
+  border-color: var(--gray);
+}
+.search-game.input-group {
+  .form-control {
+    background-color: #404040 !important;
+    color: #ebebeb;
+    border: 0;
+  }
+  .input-group-append {
+    background-color: #404040 !important;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
+  .input-group-text {
+    background-color: #404040 !important;
+    border: 0;
+  }
+}
+
+.calendar-input.input-group {
+  .input-group-text {
+    border: 0;
+    background-color: transparent;
+  }
+}
+
+.management-input.input-group {
+  .input-group-text {
+    border: 0;
+    background-color: $tab-container-color;
+  }
+}
+
+.was-validated .form-control:valid, .form-control.is-valid {
+  border-color: var(--gray);
+}
+
+.tab-container {
+  .input-group-append {
+    border-radius: 0 10rem 10rem 0 !important;
+    .input-group-text {
+      border-radius: 0 10rem 10rem 0;
+    }
+  }
+}
