@@ -122,11 +122,11 @@ export default {
     '/api': {
       target: process.env.SERVER_URL || 'http://127.0.0.1:3000'
       // target: 'http://192.168.8.118:3000'
-    },
-    '/socket.io': {
-      target: process.env.SOCKET_URL || 'http://127.0.0.1:2053'
-      // target: 'http://192.168.8.118:3000'
     }
+    // '/socket.io': {
+    //   target: process.env.SOCKET_URL || 'http://127.0.0.1:2053'
+    //   // target: 'http://192.168.8.118:3000'
+    // }
   },
   auth: {
     strategies: {
