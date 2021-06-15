@@ -51,7 +51,8 @@ export default {
     { src: '~/plugins/spinner.js' },
     { src: '~/plugins/mq.js' },
     { src: '~/plugins/socket.io.js', mode: 'client' },
-    { src: '~/plugins/qrcode.js', mode: 'client' }
+    { src: '~/plugins/qrcode.js', mode: 'client' },
+    { src: '~/plugins/switch.js', ssr: false }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -118,7 +119,7 @@ export default {
     prefix: '/api'
   },
   proxy: {
-    '/api/front': {
+    '/api': {
       target: process.env.SERVER_URL || 'http://127.0.0.1:3000'
       // target: 'http://192.168.8.118:3000'
     }

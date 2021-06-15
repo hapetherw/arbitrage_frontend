@@ -7,15 +7,11 @@
 @import "vue-flux";
 @import "nav-item";
 @import "container";
-@import "input-group";
-@import "input";
 @import "select";
 @import "button";
 @import "modal";
-@import "table";
 @import "typography";
 @import "sidebar";
-@import "list-group";
 @import "../flags.css";
 @import "../icon-material.css";
 
@@ -38,4 +34,9 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+}
+
+.info-box {
+  height: 100px;
+  border-radius: 10px;
 }

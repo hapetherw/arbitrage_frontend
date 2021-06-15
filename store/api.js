@@ -1,34 +1,43 @@
 export const actions = {
-  getFinancialTransactions (ctx, { $axios, params }) {
+  getPauseSetting (ctx, { $axios }) {
     return new Promise((resolve, reject) => {
-      $axios.post('front/get_financial_transactions', params)
+      $axios.post('get_pause_setting')
         .then((res) => {
           resolve(res.data)
         })
         .catch(reject)
     })
   },
-  getFinancialTransaction (ctx, { $axios, params }) {
+  getSetting (ctx, { $axios }) {
     return new Promise((resolve, reject) => {
-      $axios.post('front/get_financial_transaction', params)
+      $axios.post('get_setting')
         .then((res) => {
           resolve(res.data)
         })
         .catch(reject)
     })
   },
-  getEUPaymentFinancialTransaction (ctx, { $axios, params }) {
+  setPauseSetting (ctx, { $axios, params }) {
     return new Promise((resolve, reject) => {
-      $axios.post('front/get_eupayment_financial_transaction', params)
+      $axios.post('set_pause_setting', params)
         .then((res) => {
           resolve(res.data)
         })
         .catch(reject)
     })
   },
-  cancelWithdrawalRequest (ctx, { $axios, params }) {
+  setSetting (ctx, { $axios, params }) {
     return new Promise((resolve, reject) => {
-      $axios.post('front/cancel_withdrawal_request', params)
+      $axios.post('set_setting', params)
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch(reject)
+    })
+  },
+  getTransactions (ctx, { $axios, params }) {
+    return new Promise((resolve, reject) => {
+      $axios.post('get_transactions', params)
         .then((res) => {
           resolve(res.data)
         })
