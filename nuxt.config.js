@@ -3,7 +3,7 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   publicRuntimeConfig: {
     SERVER_BASE_URL: process.env.SERVER_URL || 'http://127.0.0.1:3000',
-    SOCKET_BASE_URL: process.env.SOCKET_URL || 'http://127.0.0.1:3000',
+    SOCKET_BASE_URL: process.env.SOCKET_URL || 'http://127.0.0.1:2053',
     IS_DEV: process.env.NODE_ENV || 'development'
   },
   mode: 'universal',
@@ -121,6 +121,10 @@ export default {
   proxy: {
     '/api': {
       target: process.env.SERVER_URL || 'http://127.0.0.1:3000'
+      // target: 'http://192.168.8.118:3000'
+    },
+    '/socket.io': {
+      target: process.env.SOCKET_URL || 'http://127.0.0.1:2053'
       // target: 'http://192.168.8.118:3000'
     }
   },
