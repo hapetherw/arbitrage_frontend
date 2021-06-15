@@ -52,7 +52,7 @@ export default {
     { src: '~/plugins/mq.js' },
     { src: '~/plugins/socket.io.js', mode: 'client' },
     { src: '~/plugins/qrcode.js', mode: 'client' },
-    { src: '~/plugins/switch.js', ssr: false }
+    { src: '~/plugins/switch.js', mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
