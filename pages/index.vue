@@ -65,17 +65,21 @@
           </b-button>
         </b-col>
         <b-col cols="12" class="py-3 px-4">
-          <span class="font-weight-bold text-uppercase">Review Transactions</span>
-          <toggle-button
+          <b-form-checkbox
             v-model="checkTransaction"
-            :color="{checked: '#3469ff', unchecked: '#ff008b', disabled: '#CCCCCC'}"
-            :labels="{checked: 'NO', unchecked: 'YES'}"
-            :width="60"
-            :height="25"
-            :font-size="15"
-            class="border-dark"
-            style="margin-bottom: 0"
-          />
+          >
+            <span class="font-weight-bold text-uppercase">Review Transactions</span>
+          </b-form-checkbox>
+<!--          <toggle-button-->
+<!--            v-model="checkTransaction"-->
+<!--            :color="{checked: '#3469ff', unchecked: '#ff008b', disabled: '#CCCCCC'}"-->
+<!--            :labels="{checked: 'NO', unchecked: 'YES'}"-->
+<!--            :width="60"-->
+<!--            :height="25"-->
+<!--            :font-size="15"-->
+<!--            class="border-dark"-->
+<!--            style="margin-bottom: 0"-->
+<!--          />-->
         </b-col>
         <b-col v-if="checkTransaction" cols="12" class="px-4">
           <div class="d-flex justify-content-start align-items-center">
