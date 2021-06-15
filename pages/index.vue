@@ -18,7 +18,7 @@
                   PROFIT TODAY
                 </div>
                 <div class="font-weight-bold" style="font-size: 1.2rem;">
-                  {{ profitToday }}
+                  {{ profitToday.toFixed(8) }}
                 </div>
               </div>
             </b-col>
@@ -38,7 +38,7 @@
                   TOTAL PROFIT
                 </div>
                 <div class="font-weight-bold" style="font-size: 1.2rem;">
-                  {{ totalProfit }}
+                  {{ totalProfit.toFixed(8) }}
                 </div>
               </div>
             </b-col>
@@ -48,7 +48,7 @@
                   ACCOUNT BALANCE
                 </div>
                 <div class="font-weight-bold" style="font-size: 1.2rem;">
-                  {{ accountBalance }}
+                  {{ accountBalance.toFixed(8) }}
                 </div>
               </div>
             </b-col>
