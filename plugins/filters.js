@@ -20,3 +20,10 @@ Vue.filter('currencyFormat', (value, currency = 'mBTC') => {
   }
   return value.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') + ' ' + currency
 })
+
+Vue.filter('decimalFormat', (value, precision = 5) => {
+  if (!value) {
+    value = 0
+  }
+  return value.toFixed(precision)
+})

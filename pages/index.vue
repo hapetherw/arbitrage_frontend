@@ -18,7 +18,7 @@
                   PROFIT TODAY
                 </div>
                 <div class="font-weight-bold" style="font-size: 1.2rem;">
-                  {{ profitToday.toFixed(8) }}
+                  {{ profitToday | decimalFormat(8) }}
                 </div>
               </div>
             </b-col>
@@ -28,7 +28,7 @@
                   ORDERS TODAY
                 </div>
                 <div class="font-weight-bold" style="font-size: 1.2rem;">
-                  {{ ordersToday }}
+                  {{ ordersToday | decimalFormat(8) }}
                 </div>
               </div>
             </b-col>
@@ -38,7 +38,7 @@
                   TOTAL PROFIT
                 </div>
                 <div class="font-weight-bold" style="font-size: 1.2rem;">
-                  {{ totalProfit.toFixed(8) }}
+                  {{ totalProfit | decimalFormat(8) }}
                 </div>
               </div>
             </b-col>
@@ -48,7 +48,7 @@
                   ACCOUNT BALANCE: {{ accountCurrency }}
                 </div>
                 <div class="font-weight-bold" style="font-size: 1.2rem;">
-                  {{ accountBalance.toFixed(8) }}
+                  {{ accountBalance | decimalFormat(8) }}
                 </div>
               </div>
             </b-col>
@@ -152,7 +152,7 @@
         </b-col>
         <b-col cols="12" class="py-3 px-4">
           <b-table
-            v-if="!checkTransaction"
+            v-if="!checkTransaction && items.length"
             :items="items"
             :fields="fields"
             sort-icon-left
@@ -166,25 +166,25 @@
             </template>
             <template #cell(pair)="data">
               <span class="font-weight-bold">{{ data.item.d1 }} -> {{ data.item.d2 }} -> {{ data.item.d3 }} -> {{ data.item.d1 }}<br></span>
-              <span v-if="data.item.l1 === 'num'">1. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.amount1 }} <span class="font-weight-bold">{{ data.item.d1 }}</span> to get {{ data.item.amount2.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d2 }}</span> in market {{ data.item.d1 }}/{{ data.item.d2 }} @{{ data.item.ex_price1.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d2 }}</span><br></span>
-              <span v-else>1. Use {{ data.item.amount1 }} <span class="font-weight-bold">{{ data.item.d1 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.amount2.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d2 }}</span> in market {{ data.item.d2 }}/{{ data.item.d1 }} @{{ data.item.ex_price1.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d1 }}</span><br></span>
-              <span v-if="data.item.l2 === 'num'">2. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.amount2.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d2 }}</span> to get {{ data.item.amount3.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d3 }}</span> in market {{ data.item.d2 }}/{{ data.item.d3 }} @{{ data.item.ex_price2.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d3 }}</span><br></span>
-              <span v-else>2. Use {{ data.item.amount2.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d2 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.amount3.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d3 }}</span> in market {{ data.item.d3 }}/{{ data.item.d2 }} @{{ data.item.ex_price2.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d2 }}</span><br></span>
-              <span v-if="data.item.l3 === 'num'">3. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.amount3.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d3 }}</span> to get {{ data.item.amount4.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d1 }}</span> in market {{ data.item.d3 }}/{{ data.item.d1 }} @{{ data.item.ex_price3.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d1 }}</span><br></span>
-              <span v-else>3. Use {{ data.item.amount3.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d3 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.amount4.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d1 }}</span> in market {{ data.item.d1 }}/{{ data.item.d3 }} @{{ data.item.ex_price3.toFixed(5) }} <span class="font-weight-bold">{{ data.item.d3 }}</span><br></span>
+              <span v-if="data.item.l1 === 'num'">1. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.amount1 }} <span class="font-weight-bold">{{ data.item.d1 }}</span> to get {{ data.item.amount2 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d2 }}</span> in market {{ data.item.d1 }}/{{ data.item.d2 }} @{{ data.item.ex_price1 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d2 }}</span><br></span>
+              <span v-else>1. Use {{ data.item.amount1 }} <span class="font-weight-bold">{{ data.item.d1 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.amount2 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d2 }}</span> in market {{ data.item.d2 }}/{{ data.item.d1 }} @{{ data.item.ex_price1 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d1 }}</span><br></span>
+              <span v-if="data.item.l2 === 'num'">2. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.amount2 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d2 }}</span> to get {{ data.item.amount3 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d3 }}</span> in market {{ data.item.d2 }}/{{ data.item.d3 }} @{{ data.item.ex_price2 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d3 }}</span><br></span>
+              <span v-else>2. Use {{ data.item.amount2 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d2 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.amount3 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d3 }}</span> in market {{ data.item.d3 }}/{{ data.item.d2 }} @{{ data.item.ex_price2 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d2 }}</span><br></span>
+              <span v-if="data.item.l3 === 'num'">3. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.amount3 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d3 }}</span> to get {{ data.item.amount4 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d1 }}</span> in market {{ data.item.d3 }}/{{ data.item.d1 }} @{{ data.item.ex_price3 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d1 }}</span><br></span>
+              <span v-else>3. Use {{ data.item.amount3 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d3 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.amount4 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d1 }}</span> in market {{ data.item.d1 }}/{{ data.item.d3 }} @{{ data.item.ex_price3 | decimalFormat }} <span class="font-weight-bold">{{ data.item.d3 }}</span><br></span>
             </template>
             <template #cell(fee)="data">
-              <span>{{ data.item.fee_percentage.toFixed(5) }}</span>
+              <span>{{ data.item.fee_percentage | decimalFormat }}</span>
             </template>
             <template #cell(profit)="data">
-              <span>{{ data.item.profit_percentage.toFixed(5) }}</span>
+              <span>{{ data.item.profit_percentage | decimalFormat }}</span>
             </template>
             <template #cell(date)="data">
               <span>{{ data.value | dateFormat(false) }}</span>
             </template>
           </b-table>
           <b-table
-            v-else
+            v-else-if="checkTransaction && items1.length"
             :items="items1"
             :fields="fields1"
             sort-icon-left
@@ -198,24 +198,24 @@
             </template>
             <template #cell(pair)="data">
               <span class="font-weight-bold">{{ data.item.symbol1 }} -> {{ data.item.symbol2 }} -> {{ data.item.symbol3 }} -> {{ data.item.symbol1 }}<br></span>
-              <span v-if="data.item.first_pair_type === 'sell'">1. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.first_symbol1_amount }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span> to get {{ data.item.first_symbol2_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span> in market {{ data.item.symbol1 }}/{{ data.item.symbol2 }} @{{ data.item.first_exchange_price.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span><br></span>
-              <span v-else>1. Use {{ data.item.first_symbol1_amount }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.first_symbol2_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span> in market {{ data.item.symbol2 }}/{{ data.item.symbol1 }} @{{ data.item.first_exchange_price.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span><br></span>
-              <span v-if="data.item.second_pair_type === 'sell'">2. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.second_symbol1_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span> to get {{ data.item.second_symbol2_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span> in market {{ data.item.symbol2 }}/{{ data.item.symbol3 }} @{{ data.item.second_exchange_price.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span><br></span>
-              <span v-else>2. Use {{ data.item.second_symbol1_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.second_symbol2_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span> in market {{ data.item.symbol3 }}/{{ data.item.symbol2 }} @{{ data.item.second_exchange_price.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span><br></span>
-              <span v-if="data.item.third_pair_type === 'sell'">3. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.third_symbol1_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span> to get {{ data.item.third_symbol2_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span> in market {{ data.item.symbol3 }}/{{ data.item.symbol1 }} @{{ data.item.third_exchange_price.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span><br></span>
-              <span v-else>3. Use {{ data.item.third_symbol1_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.third_symbol2_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span> in market {{ data.item.symbol1 }}/{{ data.item.symbol3 }} @{{ data.item.third_exchange_price.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span><br></span>
+              <span v-if="data.item.first_pair_type === 'sell'">1. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.first_symbol1_amount }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span> to get {{ data.item.first_symbol2_amount | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span> in market {{ data.item.symbol1 }}/{{ data.item.symbol2 }} @{{ data.item.first_exchange_price | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span><br></span>
+              <span v-else>1. Use {{ data.item.first_symbol1_amount }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.first_symbol2_amount | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span> in market {{ data.item.symbol2 }}/{{ data.item.symbol1 }} @{{ data.item.first_exchange_price | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span><br></span>
+              <span v-if="data.item.second_pair_type === 'sell'">2. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.second_symbol1_amount | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span> to get {{ data.item.second_symbol2_amount | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span> in market {{ data.item.symbol2 }}/{{ data.item.symbol3 }} @{{ data.item.second_exchange_price | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span><br></span>
+              <span v-else>2. Use {{ data.item.second_symbol1_amount | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.second_symbol2_amount | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span> in market {{ data.item.symbol3 }}/{{ data.item.symbol2 }} @{{ data.item.second_exchange_price | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol2 }}</span><br></span>
+              <span v-if="data.item.third_pair_type === 'sell'">3. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.third_symbol1_amount | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span> to get {{ data.item.third_symbol2_amount | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span> in market {{ data.item.symbol3 }}/{{ data.item.symbol1 }} @{{ data.item.third_exchange_price | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span><br></span>
+              <span v-else>3. Use {{ data.item.third_symbol1_amount | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.third_symbol2_amount | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span> in market {{ data.item.symbol1 }}/{{ data.item.symbol3 }} @{{ data.item.third_exchange_price | decimalFormat }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span><br></span>
             </template>
             <template #cell(expected_fee)="data">
-              <span>{{ data.item.fee_percentage.toFixed(5) }}</span>
+              <span>{{ data.item.fee_percentage | decimalFormat }}</span>
             </template>
             <template #cell(expected_profit)="data">
-              <span>{{ data.item.profit_percentage.toFixed(5) }}</span>
+              <span>{{ data.item.profit_percentage | decimalFormat }}</span>
             </template>
             <template #cell(result_fee)="data">
-              <span>{{ data.item.result_fee_percentage.toFixed(5) }}</span>
+              <span>{{ data.item.result_fee_percentage | decimalFormat }}</span>
             </template>
             <template #cell(result_profit)="data">
-              <span>{{ data.item.result_profit_percentage.toFixed(5) }}</span>
+              <span>{{ data.item.result_profit_percentage | decimalFormat }}</span>
             </template>
             <template #cell(date)="data">
               <span>{{ data.item.createdAt | dateFormat(false) }}</span>
