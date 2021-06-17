@@ -45,7 +45,7 @@
             <b-col cols="3">
               <div class="m-1 px-4 py-3 info-box" style="background: #fce3de;">
                 <div class="font-weight-bold" style="font-size: 1.2rem;">
-                  ACCOUNT BALANCE
+                  ACCOUNT BALANCE: {{ accountCurrency }}
                 </div>
                 <div class="font-weight-bold" style="font-size: 1.2rem;">
                   {{ accountBalance.toFixed(8) }}
@@ -186,7 +186,7 @@
           <b-table
             v-else
             :items="items1"
-            :fields="fields"
+            :fields="fields1"
             sort-icon-left
             responsive
             thead-tr-class="mytable-head"
@@ -205,11 +205,17 @@
               <span v-if="data.item.third_pair_type === 'sell'">3. <span class="font-weight-bold text-danger">SELL</span> {{ data.item.third_symbol1_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span> to get {{ data.item.third_symbol2_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span> in market {{ data.item.symbol3 }}/{{ data.item.symbol1 }} @{{ data.item.third_exchange_price.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span><br></span>
               <span v-else>3. Use {{ data.item.third_symbol1_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span> to <span class="font-weight-bold text-success">BUY</span> {{ data.item.third_symbol2_amount.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol1 }}</span> in market {{ data.item.symbol1 }}/{{ data.item.symbol3 }} @{{ data.item.third_exchange_price.toFixed(5) }} <span class="font-weight-bold">{{ data.item.symbol3 }}</span><br></span>
             </template>
-            <template #cell(fee)="data">
+            <template #cell(expected_fee)="data">
               <span>{{ data.item.fee_percentage.toFixed(5) }}</span>
             </template>
-            <template #cell(profit)="data">
+            <template #cell(expected_profit)="data">
               <span>{{ data.item.profit_percentage.toFixed(5) }}</span>
+            </template>
+            <template #cell(result_fee)="data">
+              <span>{{ data.item.result_fee_percentage.toFixed(5) }}</span>
+            </template>
+            <template #cell(result_profit)="data">
+              <span>{{ data.item.result_profit_percentage.toFixed(5) }}</span>
             </template>
             <template #cell(date)="data">
               <span>{{ data.item.createdAt | dateFormat(false) }}</span>
@@ -227,6 +233,7 @@ import moment from 'moment'
 export default {
   data: () => ({
     fields: [],
+    fields1: [],
     items: [],
     items1: [],
     checkTransaction: false,
@@ -236,6 +243,7 @@ export default {
     ordersToday: 0,
     totalProfit: 0,
     accountBalance: 0,
+    accountCurrency: '',
     calendarMask: {
       input: 'YYYY-MM-DD'
     },
@@ -265,10 +273,11 @@ export default {
       this.items = payload
     })
     this.sockets.subscribe('ARBITRAGE_STATISTICS', (payload) => {
-      this.profitToday = payload.statisticsInfo.profit_amount !== null ? payload.statisticsInfo.profit_amount : 0
+      this.profitToday = payload.statisticsInfo.result_profit_amount !== null ? payload.statisticsInfo.result_profit_amount : 0
       this.ordersToday = payload.statisticsInfo.order_count * 3
-      this.totalProfit = payload.totalProfitInfo.profit_amount !== null ? payload.totalProfitInfo.profit_amount : 0
+      this.totalProfit = payload.totalProfitInfo.result_profit_amount !== null ? payload.totalProfitInfo.result_profit_amount : 0
       this.accountBalance = payload.accountBalance
+      this.accountCurrency = payload.accountCurrency
     })
     this.fields = [
       {
@@ -297,6 +306,43 @@ export default {
         sortable: false
       }
     ]
+    this.fields1 = [
+      {
+        key: 'id',
+        label: 'ID',
+        sortable: false
+      },
+      {
+        key: 'pair',
+        label: 'PAIRS',
+        sortable: false
+      },
+      {
+        key: 'expected_fee',
+        label: 'EXCEPTED FEES(%)',
+        sortable: false
+      },
+      {
+        key: 'expected_profit',
+        label: 'EXCEPTED PROFIT(%)',
+        sortable: false
+      },
+      {
+        key: 'result_fee',
+        label: 'RESULT FEES(%)',
+        sortable: false
+      },
+      {
+        key: 'result_profit',
+        label: 'RESULT PROFIT(%)',
+        sortable: false
+      },
+      {
+        key: 'date',
+        label: 'DATE',
+        sortable: false
+      }
+    ]
   },
   methods: {
     ...mapActions('api', ['setPauseSetting', 'getPauseSetting', 'getTransactions']),
@@ -307,6 +353,11 @@ export default {
       }
       if (item.is_done === true) {
         return 'table-success'
+      }
+      if (item.result_profit_percentage > 0) {
+        return 'table-success'
+      } else {
+        return 'table-danger'
       }
     },
     async getPauseSettingAction () {
@@ -339,7 +390,6 @@ export default {
       if (this.items1.length) {
         this.items1.forEach((item, index) => {
           item.index = index + 1
-          item.is_done = item.status === 'COMPLETE'
         })
       }
     }
